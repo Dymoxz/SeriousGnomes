@@ -5,8 +5,10 @@ public class GridGenerator : MonoBehaviour
     [Header("Grid Setup")]
     [Tooltip("Drag all your tile variations in here!")]
     public GameObject[] tilePrefabs;
+    public GameObject middleTile;
     public int columns = 4; // X-axis
     public int rows = 5;    // Z-axis
+    private int middle => rows / 2; // For potential future use (like placing a special tile in the center)
 
     [Header("Spacing & Layout")]
     [Tooltip("The absolute minimum space between tiles.")]
@@ -88,8 +90,17 @@ public class GridGenerator : MonoBehaviour
         {
             for (int z = 0; z < rows; z++)
             {
-                // Pick a random prefab from the array
-                GameObject selectedPrefab = tilePrefabs[Random.Range(0, tilePrefabs.Length)];
+                GameObject selectedPrefab;
+                if (z == middle)
+                {
+                    // Pick a random prefab from the array
+                    selectedPrefab = middleTile;
+                } else
+                {
+                    // Pick a random prefab from the array
+                    selectedPrefab = tilePrefabs[Random.Range(0, tilePrefabs.Length)];
+                }
+
 
                 // Skip if you accidentally left an empty slot in the array
                 if (selectedPrefab == null) continue;
