@@ -3,11 +3,20 @@ using UnityEngine;
 public class SurfaceFiller : MonoBehaviour
 {
     [Header("Tile Settings")]
-    [Tooltip("Plaats hier je 6 (of meer) landschap varianten!")]
     public GameObject[] tilePrefabs;
-
-    [Tooltip("Hoe hoog de tegels boven de plane zweven (bijv. 0.01 tegen Z-fighting)")]
     public float elevationY = 0.01f;
+
+    [Header("Decoration (Bomen/Rotsen)")]
+    public GameObject[] decorationPrefabs;
+
+    [Tooltip("Kans per tegel dat er iets op groeit (0.0 = niks, 1.0 = op elke tegel)")]
+    [Range(0f, 1f)]
+    public float decorationDensity = 0.2f;
+
+    [Tooltip("Moet de decoratie in het midden van de tegel staan, of een beetje willekeurig verschoven?")]
+    public float randomOffset = 1.0f;
+
+    private GameObject decorationParent; // Om de hierarchy netjes te houden
 
     [ContextMenu("Vul Oppervlakte")]
     public void FillSurface()
@@ -19,13 +28,8 @@ public class SurfaceFiller : MonoBehaviour
         }
 
         MeshFilter parentMesh = GetComponent<MeshFilter>();
-        if (parentMesh == null || parentMesh.sharedMesh == null)
-        {
-            Debug.LogError("Parent heeft geen MeshFilter!");
-            return;
-        }
+        if (parentMesh == null || parentMesh.sharedMesh == null) return;
 
-        // Zoek de eerste geldige prefab om de basismaten mee te berekenen
         MeshFilter referenceTileMesh = null;
         GameObject refPrefab = null;
         foreach (var prefab in tilePrefabs)
@@ -42,26 +46,22 @@ public class SurfaceFiller : MonoBehaviour
 
         ClearSurface();
 
-        // 1. Bereken de exacte wereld-afmetingen van je parent plane
+        // Maak een apart mapje in de hierarchy voor alle bomen
+        decorationParent = new GameObject("Decorations");
+        decorationParent.transform.SetParent(this.transform);
+        decorationParent.transform.localPosition = Vector3.zero;
+
         Vector3 parentLocalSize = parentMesh.sharedMesh.bounds.size;
         float parentWorldWidth = parentLocalSize.x * transform.lossyScale.x;
         float parentWorldDepth = parentLocalSize.z * transform.lossyScale.z;
 
-        // 2. Bereken de originele grootte van je tegel prefab
         Vector3 tileLocalSize = referenceTileMesh.sharedMesh.bounds.size;
         float tileWorldWidth = tileLocalSize.x * refPrefab.transform.localScale.x;
         float tileWorldDepth = tileLocalSize.z * refPrefab.transform.localScale.z;
 
-        // 3. Bereken automatisch het aantal rijen en kolommen (geen gaps, originele size)
-        // We gebruiken RoundToInt zodat het zo dicht mogelijk bij de randen van je plane komt
-        int columns = Mathf.RoundToInt(parentWorldWidth / tileWorldWidth);
-        int rows = Mathf.RoundToInt(parentWorldDepth / tileWorldDepth);
+        int columns = Mathf.Max(1, Mathf.RoundToInt(parentWorldWidth / tileWorldWidth));
+        int rows = Mathf.Max(1, Mathf.RoundToInt(parentWorldDepth / tileWorldDepth));
 
-        // Zorg dat er altijd minimaal 1 tegel geplaatst wordt
-        columns = Mathf.Max(1, columns);
-        rows = Mathf.Max(1, rows);
-
-        // 4. Bereken startpositie om het hele blok perfect te centreren op de parent
         float gridTotalWidth = columns * tileWorldWidth;
         float gridTotalDepth = rows * tileWorldDepth;
 
@@ -70,17 +70,15 @@ public class SurfaceFiller : MonoBehaviour
         float startZ = parentTrueCenter.z - (gridTotalDepth / 2f) + (tileWorldDepth / 2f);
         float parentSurfaceY = transform.TransformPoint(parentMesh.sharedMesh.bounds.max).y;
 
-        // 5. Genereer de wereld
         for (int x = 0; x < columns; x++)
         {
             for (int z = 0; z < rows; z++)
             {
+                // 1. TEGEL PLAATSEN
                 GameObject selectedPrefab = tilePrefabs[Random.Range(0, tilePrefabs.Length)];
                 if (selectedPrefab == null) continue;
 
                 MeshFilter specifiekeTileMesh = selectedPrefab.GetComponentInChildren<MeshFilter>();
-
-                // Compenseer voor vreemde pivot points van 3D modellen
                 Vector3 pivotOffsetWorld = new Vector3(
                     specifiekeTileMesh.sharedMesh.bounds.center.x * selectedPrefab.transform.localScale.x,
                     0,
@@ -98,17 +96,34 @@ public class SurfaceFiller : MonoBehaviour
 
                 GameObject newTile = Instantiate(selectedPrefab, spawnPosition, selectedPrefab.transform.rotation, transform);
                 newTile.name = $"WorldTile_{x}_{z}";
-
-                // CRUCIAAL: We behouden de originele size door de scale van de parent (die de tegels uitrekt) teniet te doen
                 newTile.transform.localScale = new Vector3(
                     selectedPrefab.transform.localScale.x / transform.lossyScale.x,
                     selectedPrefab.transform.localScale.y / transform.lossyScale.y,
                     selectedPrefab.transform.localScale.z / transform.lossyScale.z
                 );
+
+                // 2. DECORATIE (BOMEN) PLAATSEN
+                if (decorationPrefabs != null && decorationPrefabs.Length > 0 && Random.value < decorationDensity)
+                {
+                    GameObject randomTree = decorationPrefabs[Random.Range(0, decorationPrefabs.Length)];
+                    if (randomTree != null)
+                    {
+                        // Beetje willekeur in de positie zodat het niet perfect uitgelijnd lijkt
+                        float offsetX = Random.Range(-randomOffset, randomOffset);
+                        float offsetZ = Random.Range(-randomOffset, randomOffset);
+                        Vector3 treePos = new Vector3(targetX + offsetX, parentSurfaceY + elevationY, targetZ + offsetZ);
+
+                        // Willekeurige Y rotatie (0 tot 360 graden) voor natuurlijke look
+                        Quaternion treeRot = Quaternion.Euler(0, Random.Range(0f, 360f), 0);
+
+                        GameObject newTree = Instantiate(randomTree, treePos, treeRot, decorationParent.transform);
+                        newTree.name = "Tree";
+                    }
+                }
             }
         }
 
-        Debug.Log($"Wereld Gegenereerd! ({columns}x{rows} tegels geplaatst).");
+        Debug.Log($"Wereld + Decoratie Gegenereerd!");
     }
 
     [ContextMenu("Clear Oppervlakte")]
