@@ -65,12 +65,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a4406cc81d172b448df2e472e0669ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pond
-  soilQuality: 1
-  plantDiversity: 2
-  groundwaterLevel: 0
-  biodiversity: 1
-  health: 3
-  damage: 0
+  soilQuality: 0
+  plantDiversity: 0
+  groundwaterLevel: 5
+  biodiversity: 0
+  health: 5
+  strength: 0
+  moneyGenerating: 2
 --- !u!1 &4938741627735466366
 GameObject:
   m_ObjectHideFlags: 0

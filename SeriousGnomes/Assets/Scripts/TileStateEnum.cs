@@ -2,6 +2,6 @@ using UnityEngine;
 
 public enum TileStateEnum
 {
-    FROZEN
+    FROZEN,
     SUNNY
 }

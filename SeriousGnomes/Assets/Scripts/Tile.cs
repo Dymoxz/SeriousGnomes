@@ -4,7 +4,7 @@ using UnityEngine;
 public class Tile : MonoBehaviour
 {
     [SerializeField] private List<Entity> entities;
-    [SerializeField] private TileState state; //0 is default, 1 is sunny, 2 is frozen
+    [SerializeField] private TileStateEnum state; //0 is default, 1 is sunny, 2 is frozen
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
