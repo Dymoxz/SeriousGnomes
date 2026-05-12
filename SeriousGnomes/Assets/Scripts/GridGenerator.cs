@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Collections.Generic;
 public class GridGenerator : MonoBehaviour
 {
     [Header("Grid Setup")]
@@ -135,6 +135,8 @@ public class GridGenerator : MonoBehaviour
                 );
 
                 GameObject newTile = Instantiate(selectedPrefab, spawnPosition, selectedPrefab.transform.rotation, transform);
+
+                GridManager.Instance.AddTileToGrid( spawnPosition, newTile  );
                 newTile.name = $"Tile_{x}_{z}";
                 newTile.transform.localScale = requiredLocalScale;
             }

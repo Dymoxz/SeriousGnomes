@@ -9,7 +9,25 @@ public abstract class Entity : MonoBehaviour
     [SerializeField] protected double biodiversity;
 
     [SerializeField] protected double health;
-    [SerializeField] protected double damage;
+    [SerializeField] protected double strength;
+    [SerializeField] protected double moneyGenerating;
 
+    public double GetHealth () { return health; }
+    public double GetStrength () { return strength; }
+
+    public void GetDamaged(double damage)
+    {
+        health -= damage;
+    }
+
+    public void Die()
+    {
+        //
+    }
+
+    public double GetSoilQuality () { return soilQuality; }
+    public double GetPlantDiversity () { return plantDiversity; }
+    public double GetGroundwaterLevel () { return groundwaterLevel; }
+    public double GetBiodiversity () { return biodiversity; }
 
 }
