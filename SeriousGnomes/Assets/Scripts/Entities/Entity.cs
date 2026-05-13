@@ -25,6 +25,11 @@ public abstract class Entity : MonoBehaviour
         //
     }
 
+    public void Spawn(Vector3 position)
+    { 
+        transform.position = position;
+    }
+
     public double GetSoilQuality () { return soilQuality; }
     public double GetPlantDiversity () { return plantDiversity; }
     public double GetGroundwaterLevel () { return groundwaterLevel; }

@@ -4,12 +4,14 @@ public class Card : MonoBehaviour
 {
     [Header("Grip Instellingen")]
     public LayerMask gridLayer;
-    public float heightOffset = 0.5f;
+    public float heightOffset = 0.7f;
     private bool isDragging = false;
     private GameObject currentHoveredTile;
     private Vector3 startPosition;
     public float snapThreshold = 1.5f;
-    private bool isLocked = false; 
+    private bool isLocked = false;
+
+    public Entity entity;
 
 
     void Start()
@@ -33,10 +35,15 @@ public class Card : MonoBehaviour
         {
             Vector3 tilePos = closestTilePos.Value;
             // Snap to tile position + height offset
-            transform.position = new Vector3(tilePos.x, tilePos.y + heightOffset, tilePos.z);
+            transform.position = new Vector3(tilePos.x, heightOffset, tilePos.z);
             startPosition = transform.position;
             isLocked = true;
 
+            //spawn new asset on tile
+            this.gameObject.SetActive(false);
+            entity.Spawn(startPosition);
+            
+            
         }
         else
         {
