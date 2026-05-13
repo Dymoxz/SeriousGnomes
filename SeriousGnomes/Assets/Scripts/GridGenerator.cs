@@ -137,10 +137,9 @@ public class GridGenerator : MonoBehaviour
                 GameObject newTile = Instantiate(selectedPrefab, spawnPosition, selectedPrefab.transform.rotation, transform);
 
                 // Find the GridManager in the scene, even in Edit Mode
-                GridManager gridManager = FindFirstObjectByType<GridManager>();
-                if (gridManager != null)
+                if (GridManager.Instance != null)
                 {
-                    gridManager.AddTileToGrid(spawnPosition, newTile);
+                    GridManager.Instance.AddTileToGrid(newTile);
                 }
                 else
                 {

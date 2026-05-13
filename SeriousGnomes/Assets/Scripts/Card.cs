@@ -2,40 +2,107 @@ using UnityEngine;
 
 public class Card : MonoBehaviour
 {
-    private Vector3 mOffset;
-    private float mZCoord;
+    [Header("Grip Instellingen")]
+    public LayerMask gridLayer;
+    public float heightOffset = 0.5f;
+    private bool isDragging = false;
+    private GameObject currentHoveredTile;
+    private Vector3 startPosition;
+    public float snapThreshold = 1.5f;
+    private bool isLocked = false; 
 
-    [Header("Instellingen")]
-    public float fixedY = 0.5f; // De hoogte waarop het object moet blijven
-    public float gridSize = 1.0f; // De grootte van je grid (bijv. 1.0 of 0.5)
+
+    void Start()
+    {
+        startPosition = transform.position;
+    }
 
     void OnMouseDown()
     {
-        mZCoord = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
-        mOffset = gameObject.transform.position - GetMouseWorldPos();
+        if (isLocked)
+            return;
+        isDragging = true;
     }
 
-    private Vector3 GetMouseWorldPos()
+    void OnMouseUp()
     {
-        Vector3 mousePoint = Input.mousePosition;
-        mousePoint.z = mZCoord;
-        return Camera.main.ScreenToWorldPoint(mousePoint);
+        isDragging = false;
+        Vector3? closestTilePos = FindClosestTile();
+
+        if (closestTilePos.HasValue)
+        {
+            Vector3 tilePos = closestTilePos.Value;
+            // Snap to tile position + height offset
+            transform.position = new Vector3(tilePos.x, tilePos.y + heightOffset, tilePos.z);
+            startPosition = transform.position;
+            isLocked = true;
+
+        }
+        else
+        {
+            transform.position = startPosition;
+            isLocked = false;
+        }
     }
 
-    void OnMouseDrag()
+    void Update()
     {
-        // 1. Bereken de ruwe nieuwe positie
-        Vector3 rawPosition = GetMouseWorldPos() + mOffset;
+        if (isDragging)
+        {
+            MoveWithMouse();
+        }
+    }
 
-        // 2. Lock de Y-as
-        float newY = fixedY;
+    void MoveWithMouse()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Plane groundPlane = new Plane(Vector3.up, new Vector3(0, heightOffset, 0));
 
-        // 3. Snap de X en Z naar het grid
-        // We delen door de gridsize, ronden af, en doen het weer keer de gridsize
-        float newX = Mathf.Round(rawPosition.x / gridSize) * gridSize;
-        float newZ = Mathf.Round(rawPosition.z / gridSize) * gridSize;
+        if (groundPlane.Raycast(ray, out float rayDistance))
+        {
+            transform.position = ray.GetPoint(rayDistance);
+        }
+    }
 
-        // 4. Pas de positie toe
-        transform.position = new Vector3(newX, newY, newZ);
+    private Vector3? FindClosestTile()
+    {
+        if (GridManager.Instance == null || GridManager.Instance.grid.Count == 0)
+        {
+            Debug.LogWarning("GridManager not found or grid is empty!");
+            return null;
+        }
+
+        Vector3? bestTarget = null;
+        float closestDistance = snapThreshold;
+        Vector3 cardPos = transform.position;
+
+        Debug.Log($"FindClosestTile: Checking {GridManager.Instance.grid.Count} tiles. Card at {cardPos}");
+
+        foreach (Vector3 tileCoords in GridManager.Instance.grid.Keys)
+        {
+            // Only compare X and Z (horizontal distance)
+            Vector3 cardPosXZ = new Vector3(cardPos.x, 0, cardPos.z);
+            Vector3 tilePosXZ = new Vector3(tileCoords.x, 0, tileCoords.z);
+
+            float distance = Vector3.Distance(cardPosXZ, tilePosXZ);
+
+    
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                bestTarget = tileCoords;
+            }
+        }
+
+        if (bestTarget.HasValue)
+        {
+            Debug.Log($"Closest tile found: {bestTarget.Value} at distance {closestDistance}");
+        }
+        else
+        {
+            Debug.Log($"No tile within snapThreshold ({snapThreshold})");
+        }
+
+        return bestTarget;
     }
 }

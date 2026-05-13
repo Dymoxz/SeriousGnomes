@@ -1,3 +1,4 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public Player player;
     private List<GameObject> currentCards = new List<GameObject>();
     private static System.Random rnd = new System.Random();
-
+    public GridGenerator gridGenerator;
     private bool enemyHasAttacked = false;
     private bool playerHasAttacked = false;
 
@@ -43,12 +44,14 @@ public class GameManager : MonoBehaviour
 
     private void initGame()
     {
+        gridGenerator.ClearGrid();
+        gridGenerator.GenerateBoard();
         setCards();
         //other init game logic (populat crtain random tils)
         //...
 
 
-        player.startTurn();
+        //player.startTurn();
     }
 
     private void setCards()
