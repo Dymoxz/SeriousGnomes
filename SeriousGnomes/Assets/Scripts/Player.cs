@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> cards = new List<GameObject>();
-    [SerializeField] public List<GameObject> chosenCards = new List<GameObject>();
+    [SerializeField] public List<GameObject> cards = new List<GameObject>();
+    [SerializeField] public List<GameObject> deck = new List<GameObject>(); //8 cards in deck, 4 cards in hand
 
     void Start()
     {
@@ -16,12 +16,27 @@ public class Player : MonoBehaviour
         
     }
 
-    public void selectChosenCards(List<GameObject> cards)
+    public void selectDeck(List<GameObject> cards)
     {
-        foreach (GameObject card in cards)
+        foreach (GameObject card in cards) //placeolder
         {
-            chosenCards.Add(card);  
+            deck.Add(card);  
         }
         
+    }
+
+    public void startTurn() 
+    {
+        foreach (GameObject card in deck)
+        {
+            //card.enable(); enable cards from deck to be moved and played
+
+        }
+    }
+
+    public void endTurn() //called when player clicks end turn button
+    {
+        //cards.disable(); disable cards to be moved and played
+        GameManager.Instance.endPlayerTurn();
     }
 }
