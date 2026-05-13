@@ -6,13 +6,25 @@ public class Card : MonoBehaviour
     public LayerMask gridLayer;
     public float heightOffset = 0.7f;
     private bool isDragging = false;
-    private GameObject currentHoveredTile;
     private Vector3 startPosition;
+
+    [Tooltip("If highlighting fails to trigger when hovering near edges, increase this value.")]
     public float snapThreshold = 1.5f;
     private bool isLocked = false;
 
     public Entity entity;
 
+    [Header("Highlight Settings (Emission)")]
+    public Color glowColor = Color.yellow;
+    [Tooltip("How bright the tile lights up! (Requires Post-Processing Bloom for a true 'glow' effect)")]
+    public float glowIntensity = 3.0f;
+
+    private GameObject currentHoveredTile;
+    private Renderer hoveredTileRenderer;
+
+    // We store the original state so we don't break materials that already have emission
+    private Color originalEmissionColor;
+    private bool originallyHadEmissionEnabled;
 
     void Start()
     {
@@ -29,21 +41,27 @@ public class Card : MonoBehaviour
     void OnMouseUp()
     {
         isDragging = false;
-        Vector3? closestTilePos = FindClosestTile();
 
-        if (closestTilePos.HasValue)
+        // Remove the highlight from the tile when the mouse is released
+        RemoveHighlight();
+
+        // Get the closest physical tile object
+        GameObject closestTile = FindClosestTileObject();
+
+        if (closestTile != null)
         {
-            Vector3 tilePos = closestTilePos.Value;
-            // Snap to tile position + height offset
-            transform.position = new Vector3(tilePos.x, heightOffset, tilePos.z);
+            // Find the true visual center of the tile so we snap perfectly to the middle
+            Renderer tileRenderer = closestTile.GetComponentInChildren<Renderer>();
+            Vector3 snapPos = tileRenderer != null ? tileRenderer.bounds.center : closestTile.transform.position;
+
+            // Snap to tile center position + height offset
+            transform.position = new Vector3(snapPos.x, heightOffset, snapPos.z);
             startPosition = transform.position;
             isLocked = true;
 
             //spawn new asset on tile
             this.gameObject.SetActive(false);
             entity.Spawn(startPosition);
-            
-            
         }
         else
         {
@@ -69,45 +87,113 @@ public class Card : MonoBehaviour
         {
             transform.position = ray.GetPoint(rayDistance);
         }
+
+        // Check for highlighted tile as we move
+        UpdateHoveredTile();
     }
 
-    private Vector3? FindClosestTile()
+    private void UpdateHoveredTile()
+    {
+        GameObject newHoveredTile = FindClosestTileObject();
+
+        // If the tile we are hovering over has changed
+        if (newHoveredTile != currentHoveredTile)
+        {
+            // 1. Turn OFF highlight on the old tile
+            RemoveHighlight();
+
+            // 2. Update our references to the new tile
+            currentHoveredTile = newHoveredTile;
+
+            // 3. Turn ON highlight on the new tile
+            if (currentHoveredTile != null)
+            {
+                hoveredTileRenderer = currentHoveredTile.GetComponentInChildren<Renderer>();
+
+                if (hoveredTileRenderer != null)
+                {
+                    Material mat = hoveredTileRenderer.material;
+
+                    // Save the original emission settings
+                    originallyHadEmissionEnabled = mat.IsKeywordEnabled("_EMISSION");
+                    if (mat.HasProperty("_EmissionColor"))
+                    {
+                        originalEmissionColor = mat.GetColor("_EmissionColor");
+                    }
+                    else
+                    {
+                        originalEmissionColor = Color.black;
+                    }
+
+                    // Apply the bright glow!
+                    mat.EnableKeyword("_EMISSION");
+
+                    // We multiply the color by the intensity to make it "light up bright"
+                    mat.SetColor("_EmissionColor", glowColor * glowIntensity);
+                }
+            }
+        }
+    }
+
+    private void RemoveHighlight()
+    {
+        if (hoveredTileRenderer != null)
+        {
+            Material mat = hoveredTileRenderer.material;
+
+            // Revert to original emission color
+            if (mat.HasProperty("_EmissionColor"))
+            {
+                mat.SetColor("_EmissionColor", originalEmissionColor);
+            }
+
+            // If it didn't have emission enabled before, turn the keyword back off entirely
+            if (!originallyHadEmissionEnabled)
+            {
+                mat.DisableKeyword("_EMISSION");
+            }
+
+            hoveredTileRenderer = null;
+            currentHoveredTile = null;
+        }
+    }
+
+    private GameObject FindClosestTileObject()
     {
         if (GridManager.Instance == null || GridManager.Instance.grid.Count == 0)
         {
-            Debug.LogWarning("GridManager not found or grid is empty!");
             return null;
         }
 
-        Vector3? bestTarget = null;
+        GameObject bestTarget = null;
         float closestDistance = snapThreshold;
         Vector3 cardPos = transform.position;
+        Vector3 cardPosXZ = new Vector3(cardPos.x, 0, cardPos.z);
 
-        Debug.Log($"FindClosestTile: Checking {GridManager.Instance.grid.Count} tiles. Card at {cardPos}");
-
-        foreach (Vector3 tileCoords in GridManager.Instance.grid.Keys)
+        foreach (var kvp in GridManager.Instance.grid)
         {
-            // Only compare X and Z (horizontal distance)
-            Vector3 cardPosXZ = new Vector3(cardPos.x, 0, cardPos.z);
-            Vector3 tilePosXZ = new Vector3(tileCoords.x, 0, tileCoords.z);
+            GameObject tileObj = kvp.Value;
+            if (tileObj == null) continue;
 
-            float distance = Vector3.Distance(cardPosXZ, tilePosXZ);
+            Renderer tileRenderer = tileObj.GetComponentInChildren<Renderer>();
+            Vector3 targetPosXZ;
 
-    
+            if (tileRenderer != null)
+            {
+                targetPosXZ = new Vector3(tileRenderer.bounds.center.x, 0, tileRenderer.bounds.center.z);
+            }
+            else
+            {
+                targetPosXZ = new Vector3(tileObj.transform.position.x, 0, tileObj.transform.position.z);
+            }
+
+            float distance = Vector3.Distance(cardPosXZ, targetPosXZ);
+
             if (distance < closestDistance)
             {
                 closestDistance = distance;
-                bestTarget = tileCoords;
+                bestTarget = tileObj;
             }
-        }
-
-        if (bestTarget.HasValue)
-        {
-            Debug.Log($"Closest tile found: {bestTarget.Value} at distance {closestDistance}");
-        }
-        else
-        {
-            Debug.Log($"No tile within snapThreshold ({snapThreshold})");
         }
 
         return bestTarget;
