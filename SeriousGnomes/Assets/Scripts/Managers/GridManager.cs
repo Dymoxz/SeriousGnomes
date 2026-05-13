@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class GridManager : MonoBehaviour
 {
-    private Dictionary<Vector3, GameObject> grid = new Dictionary<Vector3, GameObject>();//<coordinate, tile>
+    public Dictionary<Vector3, GameObject> grid = new Dictionary<Vector3, GameObject>();//<coordinate, tile>
 
     public static GridManager Instance { get; private set; }
 
@@ -34,11 +33,13 @@ public class GridManager : MonoBehaviour
         return grid[coordinates];
     }
 
-    public void AddTileToGrid(Vector3 spawnPos, GameObject tile)
+    public void AddTileToGrid(GameObject tile)
     {
-        grid[spawnPos] = tile;
+        Vector3 tileCenter = tile.transform.position + new Vector3(1f, 0, 1f);
+        grid[tileCenter] = tile;
     }
 
+   
 
 
 }

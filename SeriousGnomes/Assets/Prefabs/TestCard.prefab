@@ -104,8 +104,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5b3b4f182268fd4c904ddee80aeba1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Card
-  fixedY: 0.5
-  gridSize: 1
+  gridLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  heightOffset: 0.2
 --- !u!65 &8884980834897690213
 BoxCollider:
   m_ObjectHideFlags: 0
