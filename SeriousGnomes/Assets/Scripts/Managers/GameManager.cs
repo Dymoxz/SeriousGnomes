@@ -114,7 +114,6 @@ public class GameManager : MonoBehaviour
         //do round calculations
         //...
 
-
         //start turn for player or enemy depending on the round number, odd for player & even for enemy. 
         //this means players always start first, but this can be changed in the future if we want to add a coin flip at the start of the game
         if (roundNumber % 2 == 1)

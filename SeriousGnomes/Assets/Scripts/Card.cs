@@ -9,7 +9,7 @@ public class Card : MonoBehaviour
     private GameObject currentHoveredTile;
     private Vector3 startPosition;
     public float snapThreshold = 1.5f;
-    private bool isLocked = false; 
+    public bool isLocked = false; 
 
 
     void Start()
@@ -19,6 +19,7 @@ public class Card : MonoBehaviour
 
     void OnMouseDown()
     {
+        
         if (isLocked)
             return;
         isDragging = true;
@@ -36,6 +37,7 @@ public class Card : MonoBehaviour
             transform.position = new Vector3(tilePos.x, tilePos.y + heightOffset, tilePos.z);
             startPosition = transform.position;
             isLocked = true;
+            //function call from entity - spawn 
 
         }
         else
@@ -66,17 +68,10 @@ public class Card : MonoBehaviour
 
     private Vector3? FindClosestTile()
     {
-        if (GridManager.Instance == null || GridManager.Instance.grid.Count == 0)
-        {
-            Debug.LogWarning("GridManager not found or grid is empty!");
-            return null;
-        }
 
         Vector3? bestTarget = null;
         float closestDistance = snapThreshold;
         Vector3 cardPos = transform.position;
-
-        Debug.Log($"FindClosestTile: Checking {GridManager.Instance.grid.Count} tiles. Card at {cardPos}");
 
         foreach (Vector3 tileCoords in GridManager.Instance.grid.Keys)
         {
@@ -92,15 +87,6 @@ public class Card : MonoBehaviour
                 closestDistance = distance;
                 bestTarget = tileCoords;
             }
-        }
-
-        if (bestTarget.HasValue)
-        {
-            Debug.Log($"Closest tile found: {bestTarget.Value} at distance {closestDistance}");
-        }
-        else
-        {
-            Debug.Log($"No tile within snapThreshold ({snapThreshold})");
         }
 
         return bestTarget;
