@@ -123,6 +123,7 @@ public class GameManager : MonoBehaviour
             //enemy turn logic
             //Enemy.StartTurn(); this method will also call endEnemyTurn() once the attack is done
         }
+        roundNumber++;
     }
 
 
