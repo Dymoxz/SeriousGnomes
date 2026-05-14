@@ -1,5 +1,7 @@
-using UnityEngine;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using UnityEngine;
+using static UnityEngine.Rendering.DebugUI.Table;
 public class GridGenerator : MonoBehaviour
 {
     [Header("Grid Setup")]
@@ -135,6 +137,14 @@ public class GridGenerator : MonoBehaviour
                 );
 
                 GameObject newTile = Instantiate(selectedPrefab, spawnPosition, selectedPrefab.transform.rotation, transform);
+
+                // assign tags
+                if (z < rows / 2 - 0.5f)
+                    newTile.tag = "PlayerTile";
+                else if (z > rows / 2 + 0.5f)
+                    newTile.tag = "EnemyTile";
+                else
+                    newTile.tag = "NeutralTile";
 
                 // Find the GridManager in the scene, even in Edit Mode
                 if (GridManager.Instance != null)

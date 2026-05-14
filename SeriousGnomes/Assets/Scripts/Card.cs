@@ -175,6 +175,8 @@ public class Card : MonoBehaviour
             GameObject tileObj = kvp.Value;
             if (tileObj == null) continue;
 
+            if (!tileObj.CompareTag("PlayerTile")) continue;
+
             Renderer tileRenderer = tileObj.GetComponentInChildren<Renderer>();
             Vector3 targetPosXZ;
 
