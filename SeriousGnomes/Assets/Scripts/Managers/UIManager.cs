@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -24,15 +25,18 @@ public class UIManager : MonoBehaviour
         endEnemyTurn.gameObject.SetActive(active);
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void LoadMatchScene()
     {
-        
+        SceneManager.LoadScene("MatchScene");
     }
 
-    // Update is called once per frame
-    void Update()
+    public void LoadVictoryCanvas()
     {
-        
+        //create victory canvas and set it active
+    }
+
+    public void LoadLostCanvas()
+    {
+        //create lost canvas and set it active
     }
 }

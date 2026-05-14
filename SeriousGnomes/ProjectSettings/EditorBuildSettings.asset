@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/DymoPrefabBuilding.unity
     guid: 5adc4ec891c04f541baee612c09b15b4
   - enabled: 1
-    path: Assets/Scenes/MatchScreen.unity
+    path: Assets/Scenes/MatchScene.unity
     guid: cfd0f44b3131fa149b7f18faaa8bc791
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
