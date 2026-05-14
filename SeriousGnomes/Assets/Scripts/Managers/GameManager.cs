@@ -8,11 +8,13 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     [SerializeField] public Player player;
-    private List<Card> cardsInHand = new List<Card>();
+
     private static System.Random rnd = new System.Random();
     public GridGenerator gridGenerator;
     private bool enemyHasAttacked = false;
     private bool playerHasAttacked = false;
+
+    private bool isPlayerTurn = true;
 
     public DeckGenerator deckGenerator;
 
@@ -52,9 +54,9 @@ public class GameManager : MonoBehaviour
     {
         gridGenerator.ClearGrid();
         gridGenerator.GenerateBoard();
-        Debug.Log("Managing Deck");
         player.deck = deckGenerator.GenerateDeck();
-        SetCards();
+        UpdateStackDisplay();
+
 
         //other init game logic (populat crtain random tils)
         //...
@@ -62,37 +64,65 @@ public class GameManager : MonoBehaviour
 
     private void SetCards()
     {
-        int amountCardsToDisplay = 4;
-        cardsInHand = player.deck
-            .Where(c => !player.cardsInStack.Contains(c))
+        // Recycle stack if not enough cards left to fill hand
+        int availableCount = player.deck.Count(c => !player.hand.Contains(c) && !player.cardsInStack.Contains(c));
+        if (availableCount < 4 - player.hand.Count && player.cardsInStack.Count > 0)
+        {
+            while (player.cardsInStack.Count > 0)
+            {
+                Card recycled = player.cardsInStack.Pop();
+                recycled.isLocked = false;
+                recycled.gameObject.SetActive(false);
+            }
+        }
+
+        List<Card> newCards = GetHand();
+        player.hand.AddRange(newCards);
+
+        List<Card> remainingCards = player.deck
+            .Where(c => !player.hand.Contains(c) && !player.cardsInStack.Contains(c))
             .OrderBy(x => rnd.Next())
-            .Take(amountCardsToDisplay)
             .ToList();
 
-        float startX = -4.5f;
-        float spacing = 3f; 
-        float y = 0f;
-        float z = 0f;
-
-        for (int i = 0; i < cardsInHand.Count; i++)
+        foreach (Card card in remainingCards)
         {
-            Card card = cardsInHand[i];
-            Vector3 localPosition = new Vector3(startX + (i * spacing), y, z);
-            card.transform.localPosition = localPosition;      
-            card.SetStartPosition(card.transform.position);      
-            card.gameObject.SetActive(true);
-            card.SetInteractable(false);
+            player.cardsInStack.Push(card);
+            card.transform.SetParent(deckGenerator.stackParent);
+            card.gameObject.SetActive(false);
         }
+
+        float startX = -4.5f;
+        float spacing = 3f;
+
+        for (int i = 0; i < player.hand.Count; i++)
+        {
+            Card card = player.hand[i];
+            card.transform.SetParent(deckGenerator.handParent);
+            card.transform.localPosition = new Vector3(startX + (i * spacing), 0f, 0f);
+            card.SetStartPosition(card.transform.position);
+            card.gameObject.SetActive(true);
+            card.SetInteractable(isPlayerTurn);
+        }
+
+        // Show top of stack
+        UpdateStackDisplay();
     }
 
-
+    private List<Card> GetHand()
+    {
+        return player.deck
+            .Where(c => !player.hand.Contains(c) && !player.cardsInStack.Contains(c))
+            .OrderBy(x => rnd.Next())
+            .Take(4 - player.hand.Count) 
+            .ToList();
+    }
 
     public void OnCardPlayed(Card card)
     {
-        cardsInHand.Remove(card);
-        player.AddToStack(card);
-        card.transform.SetParent(deckGenerator.stackParent); // moves it under Stack in hierarchy
+        player.PlayCard(card);
+        card.transform.SetParent(deckGenerator.stackParent);
         UpdateStackDisplay();
+        SetCards(); // reuse same method to fill the gap
     }
 
     private void UpdateStackDisplay()
@@ -108,18 +138,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void RemoveCardFromHand(Card card)
-    {
-        cardsInHand.Remove(card);
-        player.deck.Remove(card); // remove from deck too so it can't be redrawn
-    }
+   
 
     public void EndPlayerTurn()
     {
         playerHasAttacked = true;
         uiManager.SetEndPlayerTurnButtonActive(false);
+        isPlayerTurn = false;
 
-        
 
         if (enemyHasAttacked)
         {
@@ -136,6 +162,7 @@ public class GameManager : MonoBehaviour
     public void EndEnemyTurn()
     {
         enemyHasAttacked = true;
+        
         uiManager.SetEndEnemyTurnButtonActive(false);
         if (playerHasAttacked)
         {
@@ -143,7 +170,8 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            player.StartTurn(cardsInHand);
+            isPlayerTurn = true;
+            player.StartTurn();
             uiManager.SetEndPlayerTurnButtonActive(true);
         }
     }
@@ -157,17 +185,23 @@ public class GameManager : MonoBehaviour
         playerHasAttacked = false;
         enemyHasAttacked = false;
 
+        SetCards();
+
         //start turn for player or enemy depending on the round number, odd for player & even for enemy. 
         //this means players always start first, but this can be changed in the future if we want to add a coin flip at the start of the game
         if (roundNumber % 2 == 0)
         {
-            player.StartTurn(cardsInHand);
+            isPlayerTurn = true;
+            player.StartTurn();
+            
             uiManager.SetEndPlayerTurnButtonActive(true);
         }
         else
         {
+            isPlayerTurn = false;
             //enemy turn logic
             //Enemy.StartTurn(); this method will also call endEnemyTurn() once the attack is done
+
             uiManager.SetEndEnemyTurnButtonActive(true);
         }
         roundNumber++;
