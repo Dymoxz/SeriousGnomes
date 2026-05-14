@@ -6,9 +6,11 @@ public class CardData : ScriptableObject
 {
     public string cardName;
     public int cost;
-    
+
+    public Entity entityPrefab;
+
     [TextArea(3, 5)] // Dit maakt het tekstvak in Unity wat groter om makkelijker te typen
     public string description;
     
-    public Sprite artwork;
+    public GameObject artwork;
 }

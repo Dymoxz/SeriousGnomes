@@ -13,7 +13,7 @@ public class Card : MonoBehaviour
     public float snapThreshold = 1.5f;
     private bool isLocked = false;
 
-    public Entity entity;
+    public CardData cardData;
 
     [Header("Highlight Settings (Emission)")]
     public Color glowColor = Color.yellow;
@@ -36,6 +36,10 @@ public class Card : MonoBehaviour
     void Start()
     {
         startPosition = transform.position;
+        if (cardData != null && cardData.artwork != null)
+        {
+            Instantiate(cardData.artwork, transform.position, transform.rotation, transform);
+        }
     }
 
     void OnMouseDown()
@@ -69,15 +73,21 @@ public class Card : MonoBehaviour
 
             //spawn new asset on tile
             this.gameObject.SetActive(false);
-            entity.Spawn(startPosition);
+            cardData.entityPrefab.Spawn(startPosition);
 
-            GameManager.Instance.RemoveCardFromHand(this);
+            GameManager.Instance.OnCardPlayed(this);
         }
         else
         {
             transform.position = startPosition;
             isLocked = false;
         }
+    }
+
+    public void SetStartPosition(Vector3 position)
+    {
+        startPosition = position;
+        transform.position = position;
     }
 
     void Update()

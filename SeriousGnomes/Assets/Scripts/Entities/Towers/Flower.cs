@@ -2,9 +2,7 @@ using UnityEngine;
 
 public class Flower : Entity, IPlaceableCard
 {
-    [Header("Card Data")]
-    [SerializeField] private CardData cardData;
-    public CardData CardData => cardData;
+
 
 
     public void OnPlace()

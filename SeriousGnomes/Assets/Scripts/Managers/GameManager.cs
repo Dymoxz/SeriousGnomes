@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     private bool enemyHasAttacked = false;
     private bool playerHasAttacked = false;
 
+    public DeckGenerator deckGenerator;
+
+
 
     [SerializeField] private int roundNumber = 0;
 
@@ -49,6 +52,8 @@ public class GameManager : MonoBehaviour
     {
         gridGenerator.ClearGrid();
         gridGenerator.GenerateBoard();
+        Debug.Log("Managing Deck");
+        player.deck = deckGenerator.GenerateDeck();
         SetCards();
 
         //other init game logic (populat crtain random tils)
@@ -57,34 +62,50 @@ public class GameManager : MonoBehaviour
 
     private void SetCards()
     {
-        //select 4 random cards from players deck
         int amountCardsToDisplay = 4;
-        cardsInHand = player.deck.OrderBy(x => rnd.Next()).Take(amountCardsToDisplay).ToList(); 
-        
-        //move current cards to bottom of screen
-        float startX = -3f;
-        float spacing = 4f;
-        float y = 4f;
-        float z = 49f;
+        cardsInHand = player.deck
+            .Where(c => !player.cardsInStack.Contains(c))
+            .OrderBy(x => rnd.Next())
+            .Take(amountCardsToDisplay)
+            .ToList();
+
+        float startX = -4.5f;
+        float spacing = 3f; 
+        float y = 0f;
+        float z = 0f;
 
         for (int i = 0; i < cardsInHand.Count; i++)
         {
             Card card = cardsInHand[i];
-
-            Vector3 targetPosition = new Vector3(
-                startX + (i * spacing),
-                y,
-                z
-            );
-
-            card.transform.position = targetPosition;
-            card.SetStartPosition(targetPosition); // tell the card this is its new home
+            Vector3 localPosition = new Vector3(startX + (i * spacing), y, z);
+            card.transform.localPosition = localPosition;      
+            card.SetStartPosition(card.transform.position);      
+            card.gameObject.SetActive(true);
+            card.SetInteractable(false);
         }
     }
-    public void SetStartPosition(Vector3 position)
+
+
+
+    public void OnCardPlayed(Card card)
     {
-        startPosition = position;
-        transform.position = position;
+        cardsInHand.Remove(card);
+        player.AddToStack(card);
+        card.transform.SetParent(deckGenerator.stackParent); // moves it under Stack in hierarchy
+        UpdateStackDisplay();
+    }
+
+    private void UpdateStackDisplay()
+    {
+        // Position the top card of the stack to the left
+        if (player.cardsInStack.Count > 0)
+        {
+            Card topCard = player.cardsInStack.Peek();
+            topCard.gameObject.SetActive(true);
+
+            topCard.transform.localPosition = new Vector3(-10f, 0f, 0f);
+            topCard.SetStartPosition(topCard.transform.position);
+        }
     }
 
     public void RemoveCardFromHand(Card card)
@@ -97,6 +118,9 @@ public class GameManager : MonoBehaviour
     {
         playerHasAttacked = true;
         uiManager.SetEndPlayerTurnButtonActive(false);
+
+        
+
         if (enemyHasAttacked)
         {
             StartRound();

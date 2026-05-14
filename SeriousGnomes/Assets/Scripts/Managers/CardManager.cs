@@ -1,28 +1,29 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class CardManager : MonoBehaviour
 {
-    [Header("UI Elementen (Sleep deze hierheen)")]
+    [Header("UI Elementen")]
     public TextMeshProUGUI titleText;
     public TextMeshProUGUI costText;
     public TextMeshProUGUI descriptionText;
-    public Image artworkImage;
+
+    [Header("3D Model")]
+    public Transform modelParent; // empty child transform where the model spawns
+    private GameObject currentModel;
 
     [Header("Data Bron (Optioneel)")]
-    public CardData cardData; // ScriptableObject
+    public CardData cardData;
 
     [Header("Handmatige Invoer (Als Card Data leeg is)")]
     public string manualTitle;
     public int manualCost;
     [TextArea(3, 5)] public string manualDescription;
-    public Sprite manualArtwork;
+    public GameObject manualModelPrefab;
 
-    // OnValidate ensures that the card updates immediately in the Editor 
-    // when you change a value or drag in a scriptable object.
+    
 
-    private void OnValidate()
+    private void Start()
     {
         RefreshCard();
     }
@@ -30,22 +31,30 @@ public class CardManager : MonoBehaviour
     public void RefreshCard()
     {
         if (cardData != null)
-        {
-            // Use the data from the ScriptableObject
-            UpdateUI(cardData.cardName, cardData.cost, cardData.description, cardData.artwork);
-        }
+            UpdateCard(cardData.cardName, cardData.cost, cardData.description, cardData.artwork);
         else
-        {
-            // Use the manual fields from the Inspector
-            UpdateUI(manualTitle, manualCost, manualDescription, manualArtwork);
-        }
+            UpdateCard(manualTitle, manualCost, manualDescription, manualModelPrefab);
     }
 
-    private void UpdateUI(string name, int cost, string desc, Sprite art)
+    private void UpdateCard(string cardName, int cost, string desc, GameObject modelPrefab)
     {
-        if (titleText != null) titleText.text = name;
+        // Update text
+        if (titleText != null) titleText.text = cardName;
         if (costText != null) costText.text = cost.ToString();
         if (descriptionText != null) descriptionText.text = desc;
-        if (artworkImage != null) artworkImage.sprite = art;
+
+        // Swap 3D model
+        if (modelParent != null)
+        {
+            if (currentModel != null)
+                Destroy(currentModel);
+
+            if (modelPrefab != null)
+            {
+                currentModel = Instantiate(modelPrefab, modelParent.position, modelParent.rotation, modelParent);
+                currentModel.transform.localPosition = Vector3.zero;
+                currentModel.transform.localRotation = Quaternion.identity;
+            }
+        }
     }
 }

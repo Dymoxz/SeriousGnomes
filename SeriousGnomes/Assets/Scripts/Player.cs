@@ -5,6 +5,21 @@ public class Player : MonoBehaviour
 {
     [SerializeField] public List<Card> cards = new List<Card>();
     [SerializeField] public List<Card> deck = new List<Card>(); //8 cards in deck, 4 cards in hand
+    public List<Card> hand = new List<Card>();
+    public Stack<Card> cardsInStack = new Stack<Card>();
+
+    public void AddToStack(Card card)
+    {
+        cardsInStack.Push(card);
+    }
+
+  
+
+
+    public void AddToHand(Card card)
+    {
+        hand.Add(card);
+    }
 
     void Start()
     {
@@ -27,17 +42,15 @@ public class Player : MonoBehaviour
 
     public void StartTurn(List<Card> currentCards) 
     {
-        Debug.Log($"StartTurn called with {currentCards.Count} cards");
         foreach (Card card in currentCards)
         {
-            Debug.Log($"Setting interactable: {card.name}");
             card.SetInteractable(true);
         }
     }
 
-    public void EndTurn() //called when player clicks end turn button
+    public void EndTurn(List<Card> currentCards) //called when player clicks end turn button
     {
-        foreach (Card card in deck)
+        foreach (Card card in currentCards)
             card.SetInteractable(false);
 
         GameManager.Instance.EndPlayerTurn();
