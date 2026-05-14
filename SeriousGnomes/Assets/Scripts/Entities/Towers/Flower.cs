@@ -1,7 +1,18 @@
 using UnityEngine;
 
-public class Flower : Entity
+public class Flower : Entity, IPlaceableCard
 {
+    [Header("Card Data")]
+    [SerializeField] private CardData cardData;
+    public CardData CardData => cardData;
+
+
+    public void OnPlace()
+    {
+        
+        // animation, index(pijler) updates and shi
+
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

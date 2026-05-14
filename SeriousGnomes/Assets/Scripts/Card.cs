@@ -7,6 +7,7 @@ public class Card : MonoBehaviour
     public float heightOffset = 0.7f;
     private bool isDragging = false;
     private Vector3 startPosition;
+    private bool isInteractable = false;
 
     [Tooltip("If highlighting fails to trigger when hovering near edges, increase this value.")]
     public float snapThreshold = 1.5f;
@@ -26,6 +27,12 @@ public class Card : MonoBehaviour
     private Color originalEmissionColor;
     private bool originallyHadEmissionEnabled;
 
+
+    public void SetInteractable(bool state)
+    {
+        isInteractable = state;
+    }
+
     void Start()
     {
         startPosition = transform.position;
@@ -33,13 +40,14 @@ public class Card : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (isLocked)
+        if (isLocked || !isInteractable)
             return;
         isDragging = true;
     }
 
     void OnMouseUp()
     {
+        if (!isInteractable) return;
         isDragging = false;
 
         // Remove the highlight from the tile when the mouse is released
@@ -62,6 +70,8 @@ public class Card : MonoBehaviour
             //spawn new asset on tile
             this.gameObject.SetActive(false);
             entity.Spawn(startPosition);
+
+            GameManager.Instance.RemoveCardFromHand(this);
         }
         else
         {

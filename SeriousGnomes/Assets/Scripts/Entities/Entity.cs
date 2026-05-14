@@ -25,9 +25,10 @@ public abstract class Entity : MonoBehaviour
         //
     }
 
-    public void Spawn(Vector3 position)
-    { 
-        transform.position = position;
+    public Entity Spawn(Vector3 position)
+    {
+        Entity instance = Instantiate(this, position, Quaternion.identity);
+        return instance;
     }
 
     public double GetSoilQuality () { return soilQuality; }

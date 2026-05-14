@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a51584bfea8943378e7cf3ff2a44a06, type: 3}
+  m_Name: InheemseBloem
+  m_EditorClassIdentifier: Assembly-CSharp::CardData
+  cardName: Inheemse Bloem
+  cost: 2
+  description: Geeft goeie, echt goeie, toevoeging aan de dingetjes
+  artwork: {fileID: 1787238933, guid: e128f7de1b6844948a420733b5a11b09, type: 3}
