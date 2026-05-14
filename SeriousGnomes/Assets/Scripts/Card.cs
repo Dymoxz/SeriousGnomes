@@ -11,7 +11,7 @@ public class Card : MonoBehaviour
 
     [Tooltip("If highlighting fails to trigger when hovering near edges, increase this value.")]
     public float snapThreshold = 1.5f;
-    private bool isLocked = false;
+    public bool isLocked = false;
 
     public CardData cardData;
 

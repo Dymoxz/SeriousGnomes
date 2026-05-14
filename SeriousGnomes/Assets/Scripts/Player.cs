@@ -14,11 +14,15 @@ public class Player : MonoBehaviour
     }
 
   
-
-
     public void AddToHand(Card card)
     {
         hand.Add(card);
+    }
+
+    public void PlayCard(Card card)
+    {
+        hand.Remove(card);
+        AddToStack(card);
     }
 
     void Start()
@@ -40,17 +44,17 @@ public class Player : MonoBehaviour
         
     }
 
-    public void StartTurn(List<Card> currentCards) 
+    public void StartTurn() 
     {
-        foreach (Card card in currentCards)
+        foreach (Card card in hand)
         {
             card.SetInteractable(true);
         }
     }
 
-    public void EndTurn(List<Card> currentCards) //called when player clicks end turn button
+    public void EndTurn()
     {
-        foreach (Card card in currentCards)
+        foreach (Card card in hand)
             card.SetInteractable(false);
 
         GameManager.Instance.EndPlayerTurn();
