@@ -6,14 +6,9 @@ public class Player : MonoBehaviour
     [SerializeField] public List<Card> cards = new List<Card>();
     [SerializeField] public List<Card> deck = new List<Card>(); //8 cards in deck, 4 cards in hand
     public List<Card> hand = new List<Card>();
-    public Stack<Card> cardsInStack = new Stack<Card>();
+    public Queue<Card> cardQueue = new Queue<Card>();
 
-    public void AddToStack(Card card)
-    {
-        cardsInStack.Push(card);
-    }
-
-  
+    
     public void AddToHand(Card card)
     {
         hand.Add(card);
@@ -22,7 +17,7 @@ public class Player : MonoBehaviour
     public void PlayCard(Card card)
     {
         hand.Remove(card);
-        AddToStack(card);
+        cardQueue.Enqueue(card);
     }
 
     void Start()

@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
         gridGenerator.ClearGrid();
         gridGenerator.GenerateBoard();
         player.deck = deckGenerator.GenerateDeck();
-        UpdateStackDisplay();
+        player.deck = player.deck.OrderBy(x => rnd.Next()).ToList();
 
 
         //other init game logic (populat crtain random tils)
@@ -64,33 +64,41 @@ public class GameManager : MonoBehaviour
 
     private void SetCards()
     {
-        // Recycle stack if not enough cards left to fill hand
-        int availableCount = player.deck.Count(c => !player.hand.Contains(c) && !player.cardsInStack.Contains(c));
-        if (availableCount < 4 - player.hand.Count && player.cardsInStack.Count > 0)
+        PushRemainingToQueue();
+
+        DealToHand();
+
+        PositionHandCards();
+
+        UpdateStackDisplay();
+    }
+
+    private void DealToHand()
+    {
+        while (player.hand.Count < 4 && player.cardQueue.Count > 0)
         {
-            while (player.cardsInStack.Count > 0)
-            {
-                Card recycled = player.cardsInStack.Pop();
-                recycled.isLocked = false;
-                recycled.gameObject.SetActive(false);
-            }
+            Card card = player.cardQueue.Dequeue();
+            player.hand.Add(card);
         }
+    }
 
-        List<Card> newCards = GetHand();
-        player.hand.AddRange(newCards);
-
-        List<Card> remainingCards = player.deck
-            .Where(c => !player.hand.Contains(c) && !player.cardsInStack.Contains(c))
-            .OrderBy(x => rnd.Next())
+    private void PushRemainingToQueue()
+    {
+        // Only enqueue cards not already in hand or queue
+        List<Card> remaining = player.deck
+            .Where(c => !player.hand.Contains(c) && !player.cardQueue.Contains(c))
             .ToList();
 
-        foreach (Card card in remainingCards)
+        foreach (Card card in remaining)
         {
-            player.cardsInStack.Push(card);
-            card.transform.SetParent(deckGenerator.stackParent);
+            player.cardQueue.Enqueue(card);
+            card.transform.SetParent(deckGenerator.queueParent);
             card.gameObject.SetActive(false);
         }
+    }
 
+    private void PositionHandCards()
+    {
         float startX = -4.5f;
         float spacing = 3f;
 
@@ -103,42 +111,47 @@ public class GameManager : MonoBehaviour
             card.gameObject.SetActive(true);
             card.SetInteractable(isPlayerTurn);
         }
-
-        // Show top of stack
-        UpdateStackDisplay();
-    }
-
-    private List<Card> GetHand()
-    {
-        return player.deck
-            .Where(c => !player.hand.Contains(c) && !player.cardsInStack.Contains(c))
-            .OrderBy(x => rnd.Next())
-            .Take(4 - player.hand.Count) 
-            .ToList();
     }
 
     public void OnCardPlayed(Card card)
     {
+        // Remove from hand
         player.PlayCard(card);
-        card.transform.SetParent(deckGenerator.stackParent);
+
+        // Add to back of queue (cycles to the end)
+        card.isLocked = false;
+        card.gameObject.SetActive(false);
+        card.transform.SetParent(deckGenerator.queueParent);
+
+        // Draw next card from front of queue into hand
+        DrawOneCard();
+        PositionHandCards();
         UpdateStackDisplay();
-        SetCards(); // reuse same method to fill the gap
+    }
+
+    private void DrawOneCard()
+    {
+        if (player.cardQueue.Count == 0) return;
+
+        Card next = player.cardQueue.Dequeue();
+        player.hand.Add(next);
     }
 
     private void UpdateStackDisplay()
     {
-        // Position the top card of the stack to the left
-        if (player.cardsInStack.Count > 0)
+        // Show the front card of the queue (next to be drawn)
+        if (player.cardQueue.Count > 0)
         {
-            Card topCard = player.cardsInStack.Peek();
-            topCard.gameObject.SetActive(true);
-
-            topCard.transform.localPosition = new Vector3(-10f, 0f, 0f);
-            topCard.SetStartPosition(topCard.transform.position);
+            Card frontCard = player.cardQueue.Peek();
+            frontCard.gameObject.SetActive(true);
+            frontCard.transform.SetParent(deckGenerator.queueParent);
+            frontCard.transform.localPosition = new Vector3(-10f, 0f, 0f);
+            frontCard.SetStartPosition(frontCard.transform.position);
         }
     }
 
-   
+
+
 
     public void EndPlayerTurn()
     {

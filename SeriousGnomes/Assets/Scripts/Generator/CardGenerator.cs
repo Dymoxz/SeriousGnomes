@@ -5,7 +5,7 @@ public class DeckGenerator : MonoBehaviour
 {
     public Card cardPrefab;
     public Transform handParent;
-    public Transform stackParent; 
+    public Transform queueParent; 
     public List<CardData> availableCards;
 
     public List<Card> GenerateDeck()
