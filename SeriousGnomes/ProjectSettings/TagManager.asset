@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - CloudBlocker
+  - EnemyTile
+  - PlayerTile
+  - NeutralTile
   layers:
   - Default
   - TransparentFX
