@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     [SerializeField] public List<Card> deck = new List<Card>(); //8 cards in deck, 4 cards in hand
     public List<Card> hand = new List<Card>();
     public Queue<Card> cardQueue = new Queue<Card>();
-
+    //money property
     
     public void AddToHand(Card card)
     {

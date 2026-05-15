@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
     {
         gridGenerator.ClearGrid();
         gridGenerator.GenerateBoard();
-        player.deck = deckGenerator.GenerateDeck();
+        player.deck = deckGenerator.GenerateDeck(); 
         player.deck = player.deck.OrderBy(x => rnd.Next()).ToList();
 
 
@@ -195,6 +195,23 @@ public class GameManager : MonoBehaviour
     {
         //do round calculations
         //...
+
+        //spawn = an entity that can move and attack, so player spawns and enemy spawns would both be considered spawns.
+        //tower = an entity that can only attack, so player towers and enemy towers would both be considered towers.
+        //spell = something that can be played from the hand, is only visual, will not actually be an object on the grid. Will just affect tiles and entities
+        //entities have a State that can be affected by spells, so for example a sunny spell would apply a burn state to an entity that would do damage over time, or a freeze spell would apply a freeze state that would prevent movement and attacking for a certain number of turns.
+
+
+        //first move all spawns, we would have to decide on some order, idk what
+        //foreach ISpawn spawn in spawns do spawn.Move()
+        //spawn.Move would be something like if tile.Next() is empty then move to tile.Next() else attack tile.entities and end that spawns turn. this would call another method on the other tile like tile.Attack() that would be a function that makes every entity on that tile do their attack. This entity should then be somehow removed from the list of spawns that have to do their move
+        //if entity on tile.Next() dies then the spawn should move there.    //first spawn attacks then spawn tries to move. //if an entity dies they should reward money to the player.
+        //tile.Next() would be return the next tile in the direction of movement, so enemy spawns would move towards the player and player spawns would move towards the enemy
+        //you can save something in ISpawn like isPlayerSpawn to determine which direction to move in for simplifications
+        //after that the ITower should do their move like spawn a spawn or throw a spell. 
+        //after that the spawns should give money to the player or enemy depending on which side they are on, and then the next round starts.
+
+
         playerHasAttacked = false;
         enemyHasAttacked = false;
 
