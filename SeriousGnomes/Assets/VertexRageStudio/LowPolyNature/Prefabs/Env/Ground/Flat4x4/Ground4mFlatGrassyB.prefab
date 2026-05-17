@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tile
   entities: []
-  state: 1
+  state: 0
 --- !u!1001 &459197005
 PrefabInstance:
   m_ObjectHideFlags: 0
