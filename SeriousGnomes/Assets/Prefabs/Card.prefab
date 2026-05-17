@@ -527,6 +527,8 @@ MonoBehaviour:
   snapThreshold: 1.5
   isLocked: 0
   cardData: {fileID: 0}
+  artworkRenderer: {fileID: 7702921668912124952}
+  targetArtworkSize: {x: 2, y: 2}
   glowColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   glowIntensity: 3
 --- !u!1 &8018288495940008294

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI; // Nodig voor de Image component
 using TMPro;
 
 public class CardManager : MonoBehaviour
@@ -7,10 +8,7 @@ public class CardManager : MonoBehaviour
     public TextMeshProUGUI titleText;
     public TextMeshProUGUI costText;
     public TextMeshProUGUI descriptionText;
-
-    [Header("3D Model")]
-    public Transform modelParent; // empty child transform where the model spawns
-    private GameObject currentModel;
+    public Image artworkImage;
 
     [Header("Data Bron (Optioneel)")]
     public CardData cardData;
@@ -19,9 +17,7 @@ public class CardManager : MonoBehaviour
     public string manualTitle;
     public int manualCost;
     [TextArea(3, 5)] public string manualDescription;
-    public GameObject manualModelPrefab;
-
-    
+    public Sprite manualArtwork;
 
     private void Start()
     {
@@ -31,29 +27,33 @@ public class CardManager : MonoBehaviour
     public void RefreshCard()
     {
         if (cardData != null)
+        {
             UpdateCard(cardData.cardName, cardData.cost, cardData.description, cardData.artwork);
+        }
         else
-            UpdateCard(manualTitle, manualCost, manualDescription, manualModelPrefab);
+        {
+            UpdateCard(manualTitle, manualCost, manualDescription, manualArtwork);
+        }
     }
 
-    private void UpdateCard(string cardName, int cost, string desc, GameObject modelPrefab)
+    private void UpdateCard(string cardName, int cost, string desc, Sprite artworkSprite)
     {
-        // Update text
+        // 1. Update de tekst
         if (titleText != null) titleText.text = cardName;
         if (costText != null) costText.text = cost.ToString();
         if (descriptionText != null) descriptionText.text = desc;
 
-        // Swap 3D model
-        if (modelParent != null)
+        // 2. Update de 2D Artwork Image
+        if (artworkImage != null)
         {
-            if (currentModel != null)
-                Destroy(currentModel);
-
-            if (modelPrefab != null)
+            if (artworkSprite != null)
             {
-                currentModel = Instantiate(modelPrefab, modelParent.position, modelParent.rotation, modelParent);
-                currentModel.transform.localPosition = Vector3.zero;
-                currentModel.transform.localRotation = Quaternion.identity;
+                artworkImage.sprite = artworkSprite;
+                artworkImage.enabled = true; // Zorg dat de afbeelding zichtbaar is
+            }
+            else
+            {
+                artworkImage.enabled = false; // Verberg de Image als er geen artwork is toegewezen
             }
         }
     }

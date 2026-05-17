@@ -14,6 +14,8 @@ public class Card : MonoBehaviour
     public bool isLocked = false;
 
     public CardData cardData;
+    public SpriteRenderer artworkRenderer;
+    public Vector2 targetArtworkSize = new Vector2(2f, 2f); 
 
     [Header("Highlight Settings (Emission)")]
     public Color glowColor = Color.yellow;
@@ -39,6 +41,7 @@ public class Card : MonoBehaviour
         if (cardData != null && cardData.artwork != null)
         {
             Instantiate(cardData.artwork, transform.position, transform.rotation, transform);
+            UpdateCardVisuals();
         }
     }
 
@@ -101,6 +104,39 @@ public class Card : MonoBehaviour
         if (isDragging)
         {
             MoveWithMouse();
+        }
+    }
+
+    public void UpdateCardVisuals()
+    {
+        if (cardData != null)
+        {
+            if (artworkRenderer != null && cardData.artwork != null)
+            {
+                // 1. Wijs de sprite toe
+                artworkRenderer.sprite = cardData.artwork;
+
+                // --- NIEUWE CODE OM DE GROOTTE TE BEPALEN ---
+
+                // 2. Haal de originele grootte van de zojuist ingeladen sprite op
+                Vector2 spriteSize = artworkRenderer.sprite.bounds.size;
+
+                // 3. Bereken de schaal die nodig is om binnen de targetSize te passen
+                float scaleX = targetArtworkSize.x / spriteSize.x;
+                float scaleY = targetArtworkSize.y / spriteSize.y;
+
+                // 4. Kies de methode die je wilt gebruiken:
+
+                // OPTIE A: "Contain" (Aanbevolen) 
+                // Zorgt dat de afbeelding past ZONDER uit te rekken (behoudt aspect ratio)
+                float scaleFactor = Mathf.Min(scaleX, scaleY);
+                artworkRenderer.transform.localScale = new Vector3(scaleFactor, scaleFactor, 1f);
+
+                /* // OPTIE B: "Stretch" 
+                // Rekt de afbeelding uit zodat hij EXACT de targetSize is, maar dit kan de afbeelding vervormen
+                artworkRenderer.transform.localScale = new Vector3(scaleX, scaleY, 1f);
+                */
+            }
         }
     }
 

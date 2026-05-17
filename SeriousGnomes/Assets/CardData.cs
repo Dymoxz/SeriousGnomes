@@ -1,6 +1,5 @@
 using UnityEngine;
 
-// Dit zorgt ervoor dat we dit bestandstype kunnen aanmaken via het rechtermuisknop-menu in Unity!
 [CreateAssetMenu(fileName = "Nieuwe Kaart", menuName = "CardCollection/Cards")]
 public class CardData : ScriptableObject
 {
@@ -9,8 +8,8 @@ public class CardData : ScriptableObject
 
     public Entity entityPrefab;
 
-    [TextArea(3, 5)] // Dit maakt het tekstvak in Unity wat groter om makkelijker te typen
+    [TextArea(3, 5)]
     public string description;
     
-    public GameObject artwork;
+    public Sprite artwork;
 }
