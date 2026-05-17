@@ -16,4 +16,4 @@ MonoBehaviour:
   cost: 2
   entityPrefab: {fileID: 4237622164911972171, guid: 5e62a80d0d530a74cb2ca1b6d82778a8, type: 3}
   description: Geeft goeie, echt goeie, toevoeging aan de dingetjes
-  artwork: {fileID: 1787238933, guid: e128f7de1b6844948a420733b5a11b09, type: 3}
+  artwork: {fileID: 21300000, guid: ccf84513ece2986449803949b3f68536, type: 3}

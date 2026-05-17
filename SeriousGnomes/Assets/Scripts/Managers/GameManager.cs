@@ -99,8 +99,8 @@ public class GameManager : MonoBehaviour
 
     private void PositionHandCards()
     {
-        float startX = -4.5f;
-        float spacing = 3f;
+        float startX = -5f;
+        float spacing = 3.8f;
 
         for (int i = 0; i < player.hand.Count; i++)
         {
