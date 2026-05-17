@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Bliksem
   cost: 5
+  entityPrefab: {fileID: 0}
   description: "Deze kaart cree\xEBrt een bliksem inslag bij de tegenstander: -5
     bij de tegenstander."
-  artwork: {fileID: 1252457962, guid: 3d5167695e36a418990cfb7b1c1128d3, type: 3}
+  artwork: {fileID: 0}

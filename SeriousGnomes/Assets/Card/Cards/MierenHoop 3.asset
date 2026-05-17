@@ -16,4 +16,4 @@ MonoBehaviour:
   cost: 3
   entityPrefab: {fileID: 4847075938040907664, guid: e5179e72a17645e4e8478871ea853bd6, type: 3}
   description: 
-  artwork: {fileID: 1092034201289170, guid: 1e3ebe3c9df04ae44b248326a7b1f3fd, type: 3}
+  artwork: {fileID: 0}
