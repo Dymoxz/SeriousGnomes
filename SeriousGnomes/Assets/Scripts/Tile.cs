@@ -19,6 +19,16 @@ public class Tile : MonoBehaviour
            
     }
 
+    public bool IsEmpty()
+    {
+        return entities.Count == 0;
+    }
+
+    public void AddEntity(Entity ent)
+    {
+        entities.Add(ent);
+    }
+
     void GetDamaged(double damage)
     {
         foreach (Entity ent in entities)

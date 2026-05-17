@@ -73,7 +73,13 @@ public class Card : MonoBehaviour
 
             //spawn new asset on tile
             this.gameObject.SetActive(false);
-            cardData.entityPrefab.Spawn(startPosition);
+            Entity spawnedEntity = cardData.entityPrefab.Spawn(startPosition);
+
+            Tile targetTileComponent = closestTile.GetComponent<Tile>();
+            if (targetTileComponent != null)
+            {
+                targetTileComponent.AddEntity(spawnedEntity);
+            }
 
             GameManager.Instance.OnCardPlayed(this);
         }
@@ -196,6 +202,9 @@ public class Card : MonoBehaviour
             if (tileObj == null) continue;
 
             if (!tileObj.CompareTag("PlayerTile")) continue;
+
+            Tile tileComponent = tileObj.GetComponent<Tile>();
+            if (tileComponent != null && !tileComponent.IsEmpty()) continue;
 
             Renderer tileRenderer = tileObj.GetComponentInChildren<Renderer>();
             Vector3 targetPosXZ;

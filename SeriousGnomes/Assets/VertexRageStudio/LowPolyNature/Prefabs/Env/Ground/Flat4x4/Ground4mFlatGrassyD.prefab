@@ -85,6 +85,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6849959160950650671}
+  - component: {fileID: -2276149294377930281}
   m_Layer: 3
   m_Name: Ground4mFlatGrassyD
   m_TagString: Untagged
@@ -109,6 +110,20 @@ Transform:
   - {fileID: 543450653654104174}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-2276149294377930281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7673592901380346856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 033d24ffe45ef2f4fb427994d9f8ddd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Tile
+  entities: []
+  state: 0
 --- !u!1001 &45932421
 PrefabInstance:
   m_ObjectHideFlags: 0
