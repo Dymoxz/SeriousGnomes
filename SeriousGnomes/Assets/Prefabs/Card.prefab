@@ -130,6 +130,7 @@ MonoBehaviour:
     m_Bits: 40
   heightOffset: 0.7
   snapThreshold: 1.5
+  isLocked: 0
   cardData: {fileID: 0}
   glowColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   glowIntensity: 3
