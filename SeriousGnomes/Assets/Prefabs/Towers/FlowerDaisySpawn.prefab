@@ -99,7 +99,6 @@ Transform:
   - {fileID: 7758526810163238028}
   - {fileID: 1237566835707737825}
   - {fileID: 111900971888183912}
-  - {fileID: 6915960029872429070}
   m_Father: {fileID: 5938215905571387609}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &85770739142492345
@@ -114,6 +113,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DaisyClusterSmallC (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1711813855856727776, guid: 0c650f832d8a1cf41b8b3a27b5220167, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f7e395e01b3c014199f8284b3c6f369, type: 2}
     - target: {fileID: 5888985105382146798, guid: 0c650f832d8a1cf41b8b3a27b5220167, type: 3}
       propertyPath: m_LocalScale.x
       value: 5
@@ -188,6 +191,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 647304890153313108}
     m_Modifications:
+    - target: {fileID: 1711813855322773858, guid: 906ddfe0b3577bc44aed7bd0ae1181cf, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f7e395e01b3c014199f8284b3c6f369, type: 2}
     - target: {fileID: 6322672082557858410, guid: 906ddfe0b3577bc44aed7bd0ae1181cf, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.2
@@ -266,6 +273,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 647304890153313108}
     m_Modifications:
+    - target: {fileID: 1711813854600633886, guid: c89f633d2a2c7314f871dcaecb9a0e0b, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f7e395e01b3c014199f8284b3c6f369, type: 2}
     - target: {fileID: 5337776088529959398, guid: c89f633d2a2c7314f871dcaecb9a0e0b, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -344,6 +355,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 647304890153313108}
     m_Modifications:
+    - target: {fileID: 1711813855017509829, guid: 1a5b2a78b9ef95e488124cda1394664e, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f7e395e01b3c014199f8284b3c6f369, type: 2}
     - target: {fileID: 7092392609840498311, guid: 1a5b2a78b9ef95e488124cda1394664e, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -422,6 +437,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 647304890153313108}
     m_Modifications:
+    - target: {fileID: 1711813854600633886, guid: c89f633d2a2c7314f871dcaecb9a0e0b, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f7e395e01b3c014199f8284b3c6f369, type: 2}
     - target: {fileID: 5337776088529959398, guid: c89f633d2a2c7314f871dcaecb9a0e0b, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -504,6 +523,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DaisyClusterSmallC
       objectReference: {fileID: 0}
+    - target: {fileID: 1711813855856727776, guid: 0c650f832d8a1cf41b8b3a27b5220167, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f7e395e01b3c014199f8284b3c6f369, type: 2}
     - target: {fileID: 5888985105382146798, guid: 0c650f832d8a1cf41b8b3a27b5220167, type: 3}
       propertyPath: m_LocalScale.x
       value: 5
@@ -578,6 +601,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 647304890153313108}
     m_Modifications:
+    - target: {fileID: 1711813855460174316, guid: 8cabbe1a114327249b5fecd49ce463d5, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f7e395e01b3c014199f8284b3c6f369, type: 2}
     - target: {fileID: 4061620478191742532, guid: 8cabbe1a114327249b5fecd49ce463d5, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -712,6 +739,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1711813855342416655, guid: 01a1c392afa89044fae2ece9a54aae0b, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f7e395e01b3c014199f8284b3c6f369, type: 2}
     - target: {fileID: 3513410244817120530, guid: 01a1c392afa89044fae2ece9a54aae0b, type: 3}
       propertyPath: m_Name
       value: DaisyClosedA
@@ -790,6 +821,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1711813854776719865, guid: c3abb7d65dff7c2408f4fbecf0078916, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f7e395e01b3c014199f8284b3c6f369, type: 2}
     - target: {fileID: 5270994474626216440, guid: c3abb7d65dff7c2408f4fbecf0078916, type: 3}
       propertyPath: m_Name
       value: DaisyClosedB
@@ -816,6 +851,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DaisyClusterSmallC (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1711813855856727776, guid: 0c650f832d8a1cf41b8b3a27b5220167, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f7e395e01b3c014199f8284b3c6f369, type: 2}
     - target: {fileID: 5888985105382146798, guid: 0c650f832d8a1cf41b8b3a27b5220167, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -890,6 +929,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 647304890153313108}
     m_Modifications:
+    - target: {fileID: 1711813855017509829, guid: 1a5b2a78b9ef95e488124cda1394664e, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f7e395e01b3c014199f8284b3c6f369, type: 2}
     - target: {fileID: 7092392609840498311, guid: 1a5b2a78b9ef95e488124cda1394664e, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -968,6 +1011,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 647304890153313108}
     m_Modifications:
+    - target: {fileID: 1711813854600633886, guid: c89f633d2a2c7314f871dcaecb9a0e0b, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f7e395e01b3c014199f8284b3c6f369, type: 2}
     - target: {fileID: 5337776088529959398, guid: c89f633d2a2c7314f871dcaecb9a0e0b, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -1052,7 +1099,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5990948516874582145, guid: 8f81b4bff5f30b743bd2a33928d3e6ca, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.30785
+      value: 0.38419682
       objectReference: {fileID: 0}
     - target: {fileID: 5990948516874582145, guid: 8f81b4bff5f30b743bd2a33928d3e6ca, type: 3}
       propertyPath: m_LocalScale.z
@@ -1064,7 +1111,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5990948516874582145, guid: 8f81b4bff5f30b743bd2a33928d3e6ca, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.108459994
+      value: 0.198
       objectReference: {fileID: 0}
     - target: {fileID: 5990948516874582145, guid: 8f81b4bff5f30b743bd2a33928d3e6ca, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1102,6 +1149,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DirtMoundD
       objectReference: {fileID: 0}
+    - target: {fileID: 8501254704577982389, guid: 8f81b4bff5f30b743bd2a33928d3e6ca, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f7e395e01b3c014199f8284b3c6f369, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1120,6 +1171,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 647304890153313108}
     m_Modifications:
+    - target: {fileID: 1711813854600633886, guid: c89f633d2a2c7314f871dcaecb9a0e0b, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f7e395e01b3c014199f8284b3c6f369, type: 2}
     - target: {fileID: 5337776088529959398, guid: c89f633d2a2c7314f871dcaecb9a0e0b, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -1202,6 +1257,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DaisyClusterSmallB
       objectReference: {fileID: 0}
+    - target: {fileID: 1711813855355866399, guid: 4bd32f8587fd0f7409f1dcc31e3ea667, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f7e395e01b3c014199f8284b3c6f369, type: 2}
     - target: {fileID: 8262647293482484594, guid: 4bd32f8587fd0f7409f1dcc31e3ea667, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -1268,80 +1327,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8262647293482484594, guid: 4bd32f8587fd0f7409f1dcc31e3ea667, type: 3}
   m_PrefabInstance: {fileID: 6953443413723903667}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &6976704568078772221
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 647304890153313108}
-    m_Modifications:
-    - target: {fileID: 4550982900957757427, guid: b31db15a4af88b24da9502a21adfbda0, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.1542446
-      objectReference: {fileID: 0}
-    - target: {fileID: 4550982900957757427, guid: b31db15a4af88b24da9502a21adfbda0, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.32573205
-      objectReference: {fileID: 0}
-    - target: {fileID: 4550982900957757427, guid: b31db15a4af88b24da9502a21adfbda0, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.1606287
-      objectReference: {fileID: 0}
-    - target: {fileID: 4550982900957757427, guid: b31db15a4af88b24da9502a21adfbda0, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.44449
-      objectReference: {fileID: 0}
-    - target: {fileID: 4550982900957757427, guid: b31db15a4af88b24da9502a21adfbda0, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.12186995
-      objectReference: {fileID: 0}
-    - target: {fileID: 4550982900957757427, guid: b31db15a4af88b24da9502a21adfbda0, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1.4985504
-      objectReference: {fileID: 0}
-    - target: {fileID: 4550982900957757427, guid: b31db15a4af88b24da9502a21adfbda0, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4550982900957757427, guid: b31db15a4af88b24da9502a21adfbda0, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4550982900957757427, guid: b31db15a4af88b24da9502a21adfbda0, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4550982900957757427, guid: b31db15a4af88b24da9502a21adfbda0, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4550982900957757427, guid: b31db15a4af88b24da9502a21adfbda0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4550982900957757427, guid: b31db15a4af88b24da9502a21adfbda0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4550982900957757427, guid: b31db15a4af88b24da9502a21adfbda0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8684363556519608284, guid: b31db15a4af88b24da9502a21adfbda0, type: 3}
-      propertyPath: m_Name
-      value: DirtDarkMoundD (3)
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: b31db15a4af88b24da9502a21adfbda0, type: 3}
---- !u!4 &6915960029872429070 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4550982900957757427, guid: b31db15a4af88b24da9502a21adfbda0, type: 3}
-  m_PrefabInstance: {fileID: 6976704568078772221}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7765751247885038145
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1354,6 +1339,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DaisyB
       objectReference: {fileID: 0}
+    - target: {fileID: 1711813854515875281, guid: 3a504b825a3083b47815316c8971dc19, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f7e395e01b3c014199f8284b3c6f369, type: 2}
     - target: {fileID: 8433186268357637103, guid: 3a504b825a3083b47815316c8971dc19, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -1428,6 +1417,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 647304890153313108}
     m_Modifications:
+    - target: {fileID: 1711813855272628984, guid: b95da4889ee3bc94681a774b8f1daa2a, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f7e395e01b3c014199f8284b3c6f369, type: 2}
     - target: {fileID: 2292512216798543336, guid: b95da4889ee3bc94681a774b8f1daa2a, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -1506,6 +1499,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 647304890153313108}
     m_Modifications:
+    - target: {fileID: 1711813855017509829, guid: 1a5b2a78b9ef95e488124cda1394664e, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f7e395e01b3c014199f8284b3c6f369, type: 2}
     - target: {fileID: 7092392609840498311, guid: 1a5b2a78b9ef95e488124cda1394664e, type: 3}
       propertyPath: m_LocalScale.x
       value: 3

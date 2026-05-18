@@ -31,10 +31,17 @@ public class Card : MonoBehaviour
     private GameObject currentHoveredTile;
     private Renderer hoveredTileRenderer;
 
-    // We store the original state so we don't break materials that already have emission
     private Color originalEmissionColor;
     private bool originallyHadEmissionEnabled;
 
+    [Header("Ghost Effect Settings")]
+    [Range(0f, 1f)]
+    public float ghostAlpha = 0.5f; // How transparent the ghost is
+    public Color ghostTint = Color.white; // Optional color tint (e.g., light blue)
+    private System.Collections.Generic.Dictionary<Renderer, Color[]> originalColors = new System.Collections.Generic.Dictionary<Renderer, Color[]>();
+
+    // NEW: Keep track of the entity while dragging
+    private Entity draggedEntityInstance;
 
     public void SetInteractable(bool state)
     {
@@ -44,8 +51,6 @@ public class Card : MonoBehaviour
     void Start()
     {
         startPosition = transform.position;
-
-        // Gewoon direct de visuals updaten. Instantiate is niet meer nodig voor Sprites!
         UpdateCardVisuals();
     }
 
@@ -53,7 +58,28 @@ public class Card : MonoBehaviour
     {
         if (isLocked || !isInteractable)
             return;
+
         isDragging = true;
+
+        // 1. Hide the card's UI/Meshes
+        ToggleCardVisuals(false);
+
+        // 2. Spawn the entity prefab as a visual preview and attach it to the card
+        if (cardData != null && cardData.entityPrefab != null && draggedEntityInstance == null)
+        {
+            draggedEntityInstance = cardData.entityPrefab.Spawn(transform.position);
+            draggedEntityInstance.transform.SetParent(this.transform);
+            draggedEntityInstance.transform.localPosition = Vector3.zero;
+
+            ApplyGhostEffect(draggedEntityInstance.gameObject);
+
+            // Turn off colliders on the preview temporarily so it doesn't block the mouse raycasts while dragging
+            Collider[] colliders = draggedEntityInstance.GetComponentsInChildren<Collider>();
+            foreach (Collider col in colliders)
+            {
+                col.enabled = false;
+            }
+        }
     }
 
     void OnMouseUp()
@@ -74,24 +100,96 @@ public class Card : MonoBehaviour
             startPosition = transform.position;
             isLocked = true;
 
-            this.gameObject.SetActive(false);
-            Entity spawnedEntity = cardData.entityPrefab.Spawn(startPosition);
-
-            Tile targetTileComponent = closestTile.GetComponent<Tile>();
-            if (targetTileComponent != null)
+            // 3a. Finalize the preview entity into the actual placed entity
+            if (draggedEntityInstance != null)
             {
-                targetTileComponent.AddEntity(spawnedEntity);
+                draggedEntityInstance.transform.SetParent(null);
+                draggedEntityInstance.transform.position = startPosition;
+
+                // Re-enable colliders for gameplay
+                Collider[] colliders = draggedEntityInstance.GetComponentsInChildren<Collider>(true);
+                foreach (Collider col in colliders)
+                {
+                    col.enabled = true;
+                }
+
+                Tile targetTileComponent = closestTile.GetComponent<Tile>();
+                if (targetTileComponent != null)
+                {
+                    targetTileComponent.AddEntity(draggedEntityInstance);
+                }
+
+                ResetGhostEffect(draggedEntityInstance.gameObject);
+
+                draggedEntityInstance = null; // Clear reference
             }
 
+            // Restore card visuals behind the scenes so it looks normal if drawn again later
+            ToggleCardVisuals(true);
+
+            this.gameObject.SetActive(false);
             GameManager.Instance.OnCardPlayed(this);
         }
         else
         {
+            // 3b. Invalid placement: destroy the preview and restore the card
+            if (draggedEntityInstance != null)
+            {
+                Destroy(draggedEntityInstance.gameObject);
+                draggedEntityInstance = null;
+            }
+
+            ToggleCardVisuals(true);
+
             transform.position = startPosition;
             isLocked = false;
         }
     }
 
+    private void ApplyGhostEffect(GameObject target)
+    {
+        originalColors.Clear();
+        Renderer[] renderers = target.GetComponentsInChildren<Renderer>();
+
+        foreach (Renderer rend in renderers)
+        {
+            // Store original colors
+            Color[] colors = new Color[rend.materials.Length];
+            for (int i = 0; i < rend.materials.Length; i++)
+            {
+                if (rend.materials[i].HasProperty("_Color"))
+                {
+                    colors[i] = rend.materials[i].color;
+
+                    // Create ghost color: Keep tint but apply ghostAlpha
+                    Color ghostCol = ghostTint;
+                    ghostCol.a = ghostAlpha;
+
+                    rend.materials[i].color = ghostCol;
+                }
+            }
+            originalColors[rend] = colors;
+        }
+    }
+
+    private void ResetGhostEffect(GameObject target)
+    {
+        Renderer[] renderers = target.GetComponentsInChildren<Renderer>();
+        foreach (Renderer rend in renderers)
+        {
+            if (originalColors.ContainsKey(rend))
+            {
+                Color[] colors = originalColors[rend];
+                for (int i = 0; i < rend.materials.Length; i++)
+                {
+                    if (rend.materials[i].HasProperty("_Color"))
+                    {
+                        rend.materials[i].color = colors[i];
+                    }
+                }
+            }
+        }
+    }
     public void SetStartPosition(Vector3 position)
     {
         startPosition = position;
@@ -110,7 +208,6 @@ public class Card : MonoBehaviour
     {
         if (cardData != null)
         {
-            // --- NIEUW: Update de 3D tekst ---
             if (itemNameTextComponent != null)
             {
                 itemNameTextComponent.text = cardData.cardName;
@@ -121,8 +218,6 @@ public class Card : MonoBehaviour
                 priceTextComponent.text = cardData.cost.ToString();
             }
 
-
-            // --- BESTAAND: Update en schaal de Sprite ---
             if (artworkRenderer != null && cardData.artwork != null)
             {
                 artworkRenderer.sprite = cardData.artwork;
@@ -135,6 +230,21 @@ public class Card : MonoBehaviour
                 float scaleFactor = Mathf.Min(scaleX, scaleY);
                 artworkRenderer.transform.localScale = new Vector3(scaleFactor, scaleFactor, 1f);
             }
+        }
+    }
+
+    // --- NEW HELPER METHOD ---
+    // Toggles all renderers on the card, making it easily disappear/reappear
+    private void ToggleCardVisuals(bool isVisible)
+    {
+        Renderer[] allRenderers = GetComponentsInChildren<Renderer>(true);
+        foreach (Renderer r in allRenderers)
+        {
+            // Make sure we NEVER hide the preview entity by accident
+            if (draggedEntityInstance != null && r.transform.IsChildOf(draggedEntityInstance.transform))
+                continue;
+
+            r.enabled = isVisible;
         }
     }
 

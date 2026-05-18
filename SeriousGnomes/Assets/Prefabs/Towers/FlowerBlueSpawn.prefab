@@ -104,6 +104,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3198287742437660417}
     m_Modifications:
+    - target: {fileID: 1711813854374467946, guid: 96b3b190365a4a143bf805dd59cd1881, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f7e395e01b3c014199f8284b3c6f369, type: 2}
     - target: {fileID: 2365496749618256755, guid: 96b3b190365a4a143bf805dd59cd1881, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -186,6 +190,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BluebellBSimple
       objectReference: {fileID: 0}
+    - target: {fileID: 1711813854954900565, guid: b3f131b8eaee2b9409ce97156886a3c2, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f7e395e01b3c014199f8284b3c6f369, type: 2}
     - target: {fileID: 9135084242558518763, guid: b3f131b8eaee2b9409ce97156886a3c2, type: 3}
       propertyPath: m_LocalScale.x
       value: 4
@@ -260,6 +268,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3198287742437660417}
     m_Modifications:
+    - target: {fileID: 1711813854400091474, guid: 2642f4623c3f5144db90732eecd53ccd, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f7e395e01b3c014199f8284b3c6f369, type: 2}
     - target: {fileID: 6407393826719001903, guid: 2642f4623c3f5144db90732eecd53ccd, type: 3}
       propertyPath: m_Name
       value: BluebellASimple (2)
@@ -338,6 +350,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3198287742437660417}
     m_Modifications:
+    - target: {fileID: 1711813854671320773, guid: f7b9f487666e05f4eb51972e0b215d1d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f7e395e01b3c014199f8284b3c6f369, type: 2}
     - target: {fileID: 4179518789228616896, guid: f7b9f487666e05f4eb51972e0b215d1d, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -416,6 +432,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3198287742437660417}
     m_Modifications:
+    - target: {fileID: 1711813854400091474, guid: 2642f4623c3f5144db90732eecd53ccd, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f7e395e01b3c014199f8284b3c6f369, type: 2}
     - target: {fileID: 6407393826719001903, guid: 2642f4623c3f5144db90732eecd53ccd, type: 3}
       propertyPath: m_Name
       value: BluebellASimple (4)
@@ -550,6 +570,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DirtMoundD (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8501254704577982389, guid: 8f81b4bff5f30b743bd2a33928d3e6ca, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f7e395e01b3c014199f8284b3c6f369, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -568,6 +592,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3198287742437660417}
     m_Modifications:
+    - target: {fileID: 1711813854400091474, guid: 2642f4623c3f5144db90732eecd53ccd, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f7e395e01b3c014199f8284b3c6f369, type: 2}
     - target: {fileID: 6407393826719001903, guid: 2642f4623c3f5144db90732eecd53ccd, type: 3}
       propertyPath: m_Name
       value: BluebellASimple
@@ -646,6 +674,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3198287742437660417}
     m_Modifications:
+    - target: {fileID: 1711813854400091474, guid: 2642f4623c3f5144db90732eecd53ccd, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f7e395e01b3c014199f8284b3c6f369, type: 2}
     - target: {fileID: 6407393826719001903, guid: 2642f4623c3f5144db90732eecd53ccd, type: 3}
       propertyPath: m_Name
       value: BluebellASimple (3)
@@ -724,6 +756,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3198287742437660417}
     m_Modifications:
+    - target: {fileID: 1711813854400091474, guid: 2642f4623c3f5144db90732eecd53ccd, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f7e395e01b3c014199f8284b3c6f369, type: 2}
     - target: {fileID: 6407393826719001903, guid: 2642f4623c3f5144db90732eecd53ccd, type: 3}
       propertyPath: m_Name
       value: BluebellASimple (1)
@@ -802,6 +838,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3198287742437660417}
     m_Modifications:
+    - target: {fileID: 1711813855794622732, guid: b39bfbb7232eef54097c0bdbbcb0bd77, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f7e395e01b3c014199f8284b3c6f369, type: 2}
     - target: {fileID: 4887014838677053324, guid: b39bfbb7232eef54097c0bdbbcb0bd77, type: 3}
       propertyPath: m_Name
       value: BluebellsClusterA
@@ -880,6 +920,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3198287742437660417}
     m_Modifications:
+    - target: {fileID: 1711813854400091474, guid: 2642f4623c3f5144db90732eecd53ccd, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f7e395e01b3c014199f8284b3c6f369, type: 2}
     - target: {fileID: 6407393826719001903, guid: 2642f4623c3f5144db90732eecd53ccd, type: 3}
       propertyPath: m_Name
       value: BluebellASimple (1)
@@ -1014,6 +1058,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1711813854433365804, guid: 0862c52c7bcf2114b879cc2efa7dd8ec, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f7e395e01b3c014199f8284b3c6f369, type: 2}
     - target: {fileID: 4574058725282941109, guid: 0862c52c7bcf2114b879cc2efa7dd8ec, type: 3}
       propertyPath: m_Name
       value: BluebellAMoreLeaves
@@ -1036,6 +1084,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3198287742437660417}
     m_Modifications:
+    - target: {fileID: 1711813854400091474, guid: 2642f4623c3f5144db90732eecd53ccd, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f7e395e01b3c014199f8284b3c6f369, type: 2}
     - target: {fileID: 6407393826719001903, guid: 2642f4623c3f5144db90732eecd53ccd, type: 3}
       propertyPath: m_Name
       value: BluebellASimple
