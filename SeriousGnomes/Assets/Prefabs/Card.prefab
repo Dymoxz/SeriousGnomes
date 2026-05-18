@@ -535,6 +535,8 @@ MonoBehaviour:
   targetArtworkSize: {x: 3, y: 3}
   glowColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   glowIntensity: 3
+  ghostAlpha: 0.859
+  ghostTint: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &7619964611447518546
 GameObject:
   m_ObjectHideFlags: 0
